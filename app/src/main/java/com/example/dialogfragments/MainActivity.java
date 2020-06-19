@@ -33,11 +33,16 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-    @Override
-    public void OnPositiveButtonClicked() {
-        Toast.makeText(this,"yes clicked",Toast.LENGTH_LONG).show();
-    }
+//    @Override
+//    public void OnPositiveButtonClicked() {
+//        Toast.makeText(this,"yes clicked",Toast.LENGTH_LONG).show();
+//
+//    }
 
+    @Override
+    public void OnPositiveButtonClicked(String txt) {
+        Toast.makeText(this,"You Clicked : "+txt,Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void OnNegativeButtonClicked() {
         Toast.makeText(this,"no clicked",Toast.LENGTH_LONG).show();
@@ -47,4 +52,6 @@ public class MainActivity extends AppCompatActivity implements
     public void OnNeutralButtonClicked() {
 
     }
+
+
 }

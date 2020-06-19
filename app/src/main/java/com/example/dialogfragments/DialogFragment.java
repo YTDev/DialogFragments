@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -77,45 +80,68 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         // Required empty public constructor
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        builder.setTitle(title);
-        builder.setIcon(icon);
-        builder.setMessage(message);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Toast.makeText(getActivity(),"yes clicked",Toast.LENGTH_LONG).show();
-                positiveClickListener.OnPositiveButtonClicked();
-
-            }
-        });
-
-        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              //  Toast.makeText(getActivity(),"no clicked",Toast.LENGTH_LONG).show();
-                negativeClickListener.OnNegativeButtonClicked();
-            }
-        });
-
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //dismiss();
-                neutralClickListener.OnNeutralButtonClicked();
-            }
-        });
-        return builder.create();
-    }
+//    @NonNull
+//    @Override
+//    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+//        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+//        builder.setTitle(title);
+//        builder.setIcon(icon);
+//        builder.setMessage(message);
+//        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                //Toast.makeText(getActivity(),"yes clicked",Toast.LENGTH_LONG).show();
+//                positiveClickListener.OnPositiveButtonClicked();
+//
+//            }
+//        });
+//
+//        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//              //  Toast.makeText(getActivity(),"no clicked",Toast.LENGTH_LONG).show();
+//                negativeClickListener.OnNegativeButtonClicked();
+//            }
+//        });
+//
+//        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                //dismiss();
+//                neutralClickListener.OnNeutralButtonClicked();
+//            }
+//        });
+//        return builder.create();
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialog, container, false);
+        View v=inflater.inflate(R.layout.custom_dialog_layout, container, false);
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView dialog_title= view.findViewById(R.id.dialog_title);
+        TextView dialog_msg=view.findViewById(R.id.dialog_msg);
+        final EditText dialog_edt=view.findViewById(R.id.dialog_edt);
+        Button btn_ok=view.findViewById(R.id.btn_ok);
+
+        dialog_title.setText(title);
+        dialog_msg.setText(message);
+
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                positiveClickListener.OnPositiveButtonClicked(dialog_edt.getText().toString());
+                dismiss();
+            }
+        });
     }
 
     @Override
@@ -130,7 +156,8 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     }
 
     public interface OnPositiveClickListener{
-        void OnPositiveButtonClicked();
+        //void OnPositiveButtonClicked();
+        void OnPositiveButtonClicked(String txt);
     }
 
     public interface OnNegativeClickListener{
